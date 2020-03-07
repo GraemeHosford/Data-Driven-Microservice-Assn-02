@@ -12,9 +12,8 @@ tweet_data = None
 
 class TweetReader(tweetreader_pb2_grpc.TweetReaderServicer):
     def getTweets(self, request, context):
-        for tweets in tweet_data.iterrows():
-            time.sleep(0.5)
-            yield tweetreader_pb2.Tweet(target=tweets["target"], text=tweets["text"], username=tweets["user"])
+        yield tweetreader_pb2.Tweet(target="target1", text="Text1", username="User1")
+        yield tweetreader_pb2.Tweet(target="target2", text="Text2", username="User2")
 
 
 def read_in_tweets():
