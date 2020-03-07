@@ -7,17 +7,18 @@ import tweetreader_pb2
 import tweetreader_pb2_grpc
 
 
-tweet_date = None
+tweet_data = None
 
 
 class TweetReader(tweetreader_pb2_grpc.TweetReaderServicer):
     def getTweets(self, request, context):
-        for tweets in tweet_date.iterrows():
+        for tweets in tweet_data.iterrows():
             time.sleep(0.5)
             yield tweetreader_pb2.Tweet(target=tweets["target"], text=tweets["text"], username=tweets["user"])
 
 
 def read_in_tweets():
+    global tweet_data
     tweet_data = pd.read_csv("training.1600000.processed.noemoticon.csv", encoding="latin")
 
     # Giving columns actual names instead of indexes to make using pandas a bit easier

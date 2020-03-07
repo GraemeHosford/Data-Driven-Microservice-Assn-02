@@ -5,8 +5,8 @@ import tweetreader_pb2 as tweetreader__pb2
 
 
 class TweetReaderStub(object):
-  # missing associated documentation comment in .proto file
-  pass
+  """Tweet reader service docs
+  """
 
   def __init__(self, channel):
     """Constructor.
@@ -22,8 +22,8 @@ class TweetReaderStub(object):
 
 
 class TweetReaderServicer(object):
-  # missing associated documentation comment in .proto file
-  pass
+  """Tweet reader service docs
+  """
 
   def getTweets(self, request, context):
     # missing associated documentation comment in .proto file

@@ -19,6 +19,7 @@ option objc_class_prefix = "HSW";
 
 package tweetreader;
 
+// Tweet reader service docs
 service TweetReader {
   rpc getTweets (TweetRequest) returns (stream Tweet) {}
 }
