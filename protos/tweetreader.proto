@@ -28,6 +28,7 @@ message Tweet {
   string target = 1;
   string text = 2;
   string username = 3;
+  string id = 4;
 }
 
 message TweetRequest {}

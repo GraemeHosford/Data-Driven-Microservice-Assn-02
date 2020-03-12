@@ -2,9 +2,8 @@
 # Student ID: R00147327
 
 from flask import Flask
-import tweet_analytics_client_pb2
-import tweet_analytics_client_pb2_grpc
 import grpc
+import redis
 
 app = Flask(__name__)
 
@@ -13,13 +12,14 @@ app = Flask(__name__)
 def show_tweets():
     output = ""
     with grpc.insecure_channel("localhost:50052") as channel:
-        stub = tweet_analytics_client_pb2_grpc.TweetAnalyticsClientStub(channel)
-        response = stub.getTweets(tweet_analytics_client_pb2.TweetRequest())
-
-        for item in response:
-            output += item.target + " - " + item.text + " - " + item.username + "<br>"
-
+        try:
+            connection = redis.StrictRedis(port=6379)
+            for key in connection.scan_iter("*"):
+                value = connection.get(key)
+                output += str(key) + str(value) + "<br/>"
             return output
+        except Exception as e:
+            print("Error", e)
 
 
 if __name__ == '__main__':

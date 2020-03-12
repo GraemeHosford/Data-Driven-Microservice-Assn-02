@@ -12,7 +12,7 @@ class TweetReader(tweetreader_pb2_grpc.TweetReaderServicer):
         for line in open("training.1600000.processed.noemoticon.csv", "r"):
             line_details = line.split("\",\"")
             yield tweetreader_pb2.Tweet(target=line_details[0], text=line_details[5].replace("\"", ""),
-                                        username=line_details[4])
+                                        username=line_details[4], id=line_details[1])
 
 
 def serve():

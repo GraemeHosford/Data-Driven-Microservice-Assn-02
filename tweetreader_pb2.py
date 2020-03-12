@@ -18,7 +18,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   package='tweetreader',
   syntax='proto3',
   serialized_options=b'\n\007ex.grpc\242\002\003HSW',
-  serialized_pb=b'\n\x11tweetreader.proto\x12\x0btweetreader\"7\n\x05Tweet\x12\x0e\n\x06target\x18\x01 \x01(\t\x12\x0c\n\x04text\x18\x02 \x01(\t\x12\x10\n\x08username\x18\x03 \x01(\t\"\x0e\n\x0cTweetRequest2M\n\x0bTweetReader\x12>\n\tgetTweets\x12\x19.tweetreader.TweetRequest\x1a\x12.tweetreader.Tweet\"\x00\x30\x01\x42\x0f\n\x07\x65x.grpc\xa2\x02\x03HSWb\x06proto3'
+  serialized_pb=b'\n\x11tweetreader.proto\x12\x0btweetreader\"C\n\x05Tweet\x12\x0e\n\x06target\x18\x01 \x01(\t\x12\x0c\n\x04text\x18\x02 \x01(\t\x12\x10\n\x08username\x18\x03 \x01(\t\x12\n\n\x02id\x18\x04 \x01(\t\"\x0e\n\x0cTweetRequest2M\n\x0bTweetReader\x12>\n\tgetTweets\x12\x19.tweetreader.TweetRequest\x1a\x12.tweetreader.Tweet\"\x00\x30\x01\x42\x0f\n\x07\x65x.grpc\xa2\x02\x03HSWb\x06proto3'
 )
 
 
@@ -52,6 +52,13 @@ _TWEET = _descriptor.Descriptor(
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='id', full_name='tweetreader.Tweet.id', index=3,
+      number=4, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
   ],
   extensions=[
   ],
@@ -65,7 +72,7 @@ _TWEET = _descriptor.Descriptor(
   oneofs=[
   ],
   serialized_start=34,
-  serialized_end=89,
+  serialized_end=101,
 )
 
 
@@ -88,8 +95,8 @@ _TWEETREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=91,
-  serialized_end=105,
+  serialized_start=103,
+  serialized_end=117,
 )
 
 DESCRIPTOR.message_types_by_name['Tweet'] = _TWEET
@@ -119,8 +126,8 @@ _TWEETREADER = _descriptor.ServiceDescriptor(
   file=DESCRIPTOR,
   index=0,
   serialized_options=None,
-  serialized_start=107,
-  serialized_end=184,
+  serialized_start=119,
+  serialized_end=196,
   methods=[
   _descriptor.MethodDescriptor(
     name='getTweets',
