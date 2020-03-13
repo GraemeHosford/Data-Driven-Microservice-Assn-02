@@ -2,7 +2,6 @@
 # Student ID: R00147327
 
 from flask import Flask
-import grpc
 import redis
 
 app = Flask(__name__)
@@ -11,15 +10,27 @@ app = Flask(__name__)
 @app.route('/')
 def show_tweets():
     output = ""
-    with grpc.insecure_channel("localhost:50052") as channel:
-        try:
-            connection = redis.StrictRedis(port=6379)
-            for key in connection.scan_iter("*"):
-                value = connection.get(key)
-                output += str(key) + str(value) + "<br/>"
-            return output
-        except Exception as e:
-            print("Error", e)
+
+    try:
+        connection = redis.StrictRedis(port=6379, decode_responses=True)
+        for key in connection.scan_iter("Total"):
+            value = connection.get(key)
+
+            # Using regex to make number in format b'XYZ' appear as just XYZ
+            output += "Number of words globally:\t" + value + "<br/>"
+
+        for key in connection.scan_iter("LeastWords"):
+            value = connection.get(key)
+            output += "Tweet with the least number of words:\t" + value + "<br/>"
+
+        for key in connection.scan_iter("Sentiment"):
+            value = connection.get(key)
+            output += "Sentiment in the last 3 minutes:\t" + value + "<br/>"
+
+        return output
+    except Exception as e:
+        print("Error", e)
+        return "An error has occurred when reading data from redis"
 
 
 if __name__ == '__main__':
