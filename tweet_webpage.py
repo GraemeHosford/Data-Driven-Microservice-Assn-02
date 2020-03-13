@@ -9,24 +9,25 @@ app = Flask(__name__)
 
 @app.route('/')
 def show_tweets():
-    output = ""
+    output = "<table style=\"border:1px solid black;margin-left:auto;margin-right:auto;\">"
 
     try:
-        connection = redis.StrictRedis(port=6379, decode_responses=True)
+        connection = redis.StrictRedis(host="redis", port=6379, decode_responses=True)
         for key in connection.scan_iter("Total"):
             value = connection.get(key)
 
             # Using regex to make number in format b'XYZ' appear as just XYZ
-            output += "Number of words globally:\t" + value + "<br/>"
+            output += "<tr><td><strong>Number of words globally:</strong>\t" + value + "</td></tr>"
 
         for key in connection.scan_iter("LeastWords"):
             value = connection.get(key)
-            output += "Tweet with the least number of words:\t" + value + "<br/>"
+            output += "<tr><td><strong>Tweet with the least number of words:</strong>\t" + value + "</td></tr>"
 
         for key in connection.scan_iter("Sentiment"):
             value = connection.get(key)
-            output += "Sentiment in the last 3 minutes:\t" + value + "<br/>"
+            output += "<tr><td><strong>Sentiment in the last 3 minutes:</strong>\t" + value + "</td></tr>"
 
+        output += "</table>"
         return output
     except Exception as e:
         print("Error", e)

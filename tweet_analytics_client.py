@@ -1,8 +1,8 @@
 # Name: Graeme Hosford
 # Student ID: R00147327
 
-import tweetreader_pb2
 import tweetreader_pb2_grpc
+import tweetreader_pb2
 import time
 import random
 import redis
@@ -10,7 +10,7 @@ import grpc
 
 
 def run():
-    with grpc.insecure_channel('localhost:50051') as channel:
+    with grpc.insecure_channel('tweet_reader:50051') as channel:
         stub = tweetreader_pb2_grpc.TweetReaderStub(channel)
         response = stub.getTweets(tweetreader_pb2.TweetRequest())
 
@@ -21,6 +21,8 @@ def run():
         num_positive = 0
         num_negative = 0
         num_neutral = 0
+
+        sentiment_update_time = None
 
         for item in response:
             tweet_words = len(item.text.split())
@@ -38,19 +40,21 @@ def run():
                 num_positive += 1
 
             try:
-                connection = redis.StrictRedis(port=6379)
+                connection = redis.StrictRedis(host="redis", port=6379)
                 connection.set("Total", str(total_words))
                 connection.set("LeastWords", tweet_least_words)
 
-                if num_negative > num_neutral and num_negative > num_positive:
-                    connection.set("Sentiment", "Negative")
-                elif num_neutral > num_negative and num_neutral > num_positive:
-                    connection.set("Sentiment", "Neutral")
-                else:
-                    connection.set("Sentiment", "Positive")
+                # If 3 minutes have passed since last sentiment update to redis then do that update
+                # again give updated values
+                if sentiment_update_time is None or time.time() >= (sentiment_update_time + 180):
+                    sentiment_update_time = time.time()
 
-                # Printing tweet values to console as a basic logging while testing
-                print(item.text)
+                    if num_negative > num_neutral and num_negative > num_positive:
+                        connection.set("Sentiment", "Negative")
+                    elif num_neutral > num_negative and num_neutral > num_positive:
+                        connection.set("Sentiment", "Neutral")
+                    else:
+                        connection.set("Sentiment", "Positive")
 
                 # Sleep for some time between 0 and 4 seconds for average of 2 seconds
                 time.sleep(random.randint(0, 4))

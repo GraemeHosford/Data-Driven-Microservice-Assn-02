@@ -1,8 +1,8 @@
 from concurrent import futures
 import grpc
 
-import tweetreader_pb2
 import tweetreader_pb2_grpc
+import tweetreader_pb2
 
 tweet_data = None
 

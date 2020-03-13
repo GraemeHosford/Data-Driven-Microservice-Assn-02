@@ -1,5 +1,4 @@
-pandas
-grpcio
-googleapis-common-protos
 Flask
 redis
+grpcio
+googleapis-common-protos

@@ -2,26 +2,26 @@ version: '3'
 services:
   tweet_reader:
     build:
-      context: .
+      context: ./server
       dockerfile: TweetReader.Dockerfile
     ports:
       - "50051:50051"
   tweet_analytics_client:
     build:
-      context: .
+      context: ./client
       dockerfile: TweetAnalyticsClient.Dockerfile
     depends_on:
       - "tweet_reader"
-    command: ["./wait-for-it.sh", "tweet_reader:50051", "--", "python", "-u", "tweet_analytics_client.py"]
+    command: ["./client/wait-for-it.sh", "tweet_reader:50051", "--", "python", "-u", "./client/tweet_analytics_client.py"]
   redis:
     image: redis:alpine
     ports:
-     - "6379:6379"
+      - "6379:6379"
   tweet_webpage:
     build:
-      context: .
+      context: ./webpage
       dockerfile: TweetWebpage.Dockerfile
     ports:
-    - "8080:5000"
+      - "8080:5000"
     depends_on:
-    - "redis"
+      - "redis"

@@ -2,10 +2,10 @@ FROM python:3-stretch
 
 WORKDIR /app
 
-COPY . /app
+COPY client /app/client
 
-RUN pip install --trusted-host pypi.python.org -r requirements.txt
+RUN pip install --trusted-host pypi.python.org -r ./client/requirements.txt
 
 EXPOSE 50052
 
-CMD ["python", "tweet_analytics_client.py"]
+CMD ["python", "./client/tweet_analytics_client.py"]
