@@ -2,13 +2,13 @@ version: '3'
 services:
   tweet_reader:
     build:
-      context: ./server
+      context: .
       dockerfile: TweetReader.Dockerfile
     ports:
       - "50051:50051"
   tweet_analytics_client:
     build:
-      context: ./client
+      context: .
       dockerfile: TweetAnalyticsClient.Dockerfile
     depends_on:
       - "tweet_reader"
@@ -19,7 +19,7 @@ services:
       - "6379:6379"
   tweet_webpage:
     build:
-      context: ./webpage
+      context: .
       dockerfile: TweetWebpage.Dockerfile
     ports:
       - "8080:5000"

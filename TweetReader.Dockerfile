@@ -2,10 +2,10 @@ FROM python:3-stretch
 
 WORKDIR /app
 
-COPY server /app/server
+COPY . /app
 
-RUN pip install --trusted-host pypi.python.org -r ./server/requirements.txt
+RUN pip install --trusted-host pypi.python.org -r requirements.txt
 
 EXPOSE 50051
 
-CMD ["python", "./server/tweet_reader.py"]
+CMD ["python", "tweet_reader.py"]
