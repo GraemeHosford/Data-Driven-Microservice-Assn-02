@@ -12,7 +12,7 @@ services:
       dockerfile: TweetAnalyticsClient.Dockerfile
     depends_on:
       - "tweet_reader"
-    command: ["./client/wait-for-it.sh", "tweet_reader:50051", "--", "python", "-u", "./client/tweet_analytics_client.py"]
+    command: ["./wait-for-it.sh", "tweet_reader:50051", "--", "python", "-u", "tweet_analytics_client.py"]
   redis:
     image: redis:alpine
     ports:
