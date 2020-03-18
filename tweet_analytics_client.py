@@ -27,6 +27,7 @@ def run():
         sentiment_update_time = None
 
         for item in response:
+            print(item.text)
             tweet_words = len(item.text.split())
             total_words += tweet_words
             num_tweets += 1
