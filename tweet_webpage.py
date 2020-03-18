@@ -23,9 +23,25 @@ def show_tweets():
             value = connection.get(key)
             output += "<tr><td><strong>Tweet with the least number of words:</strong>\t" + value + "</td></tr>"
 
-        for key in connection.scan_iter("Sentiment"):
+        for key in connection.scan_iter("SentimentNegative"):
             value = connection.get(key)
-            output += "<tr><td><strong>Sentiment in the last 3 minutes:</strong>\t" + value + "</td></tr>"
+            output += "<tr><td><strong>Negative sentiment in the last 3 minutes:</strong>\t" + value + "%</td></tr>"
+
+        for key in connection.scan_iter("SentimentNeutral"):
+            value = connection.get(key)
+            output += "<tr><td><strong>Neutral sentiment in the last 3 minutes:</strong>\t" + value + "%</td></tr>"
+
+        for key in connection.scan_iter("SentimentPositive"):
+            value = connection.get(key)
+            output += "<tr><td><strong>Positive sentiment in the last 3 minutes:</strong>\t" + value + "%</td></tr>"
+
+        # Split metrics and tweet list into separate tables
+        output += "</table>"
+        output += "<table style=\"border:1px solid black;margin-left:auto;margin-right:auto;\">"
+
+        for key in connection.scan_iter("Tweets.*"):
+            value = connection.get(key)
+            output += "<tr><td>" + value + "</td></tr>"
 
         output += "</table>"
         return output
