@@ -1,8 +1,8 @@
 # Name: Graeme Hosford
 # Student ID: R00147327
 
-from flask import Flask
 import redis
+from flask import Flask
 
 app = Flask(__name__)
 
@@ -12,7 +12,7 @@ def show_tweets():
     output = "<table style=\"border:1px solid black;margin-left:auto;margin-right:auto;\">"
 
     try:
-        connection = redis.StrictRedis(host="redis", port=6379, decode_responses=True)
+        connection = redis.StrictRedis(port=6379, decode_responses=True)
         for key in connection.scan_iter("Total"):
             value = connection.get(key)
 

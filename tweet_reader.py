@@ -1,10 +1,9 @@
 from concurrent import futures
+
 import grpc
 
-import tweetreader_pb2_grpc
 import tweetreader_pb2
-
-tweet_data = None
+import tweetreader_pb2_grpc
 
 
 class TweetReader(tweetreader_pb2_grpc.TweetReaderServicer):
@@ -20,7 +19,7 @@ def serve():
     tweetreader_pb2_grpc.add_TweetReaderServicer_to_server(TweetReader(), server)
     server.add_insecure_port("[::]:50051")
     server.start()
-    print("Server started")
+    print("Tweet Server started")
     server.wait_for_termination()
 
 
