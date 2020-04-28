@@ -25,7 +25,7 @@ services:
       dockerfile: RedditAnalyticsClient.Dockerfile
     depends_on:
       - "reddit_reader"
-    command: ["./wait_for_it.sh", "reddit_reader:50055", "--", "python", "-u", "reddit_analytics_client.py"]
+    command: ["./wait-for-it.sh", "reddit_reader:50055", "--", "python", "-u", "reddit_analytics_client.py"]
   redis:
     image: redis:alpine
     ports:

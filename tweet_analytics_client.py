@@ -12,7 +12,7 @@ import tweetreader_pb2_grpc
 
 
 def run():
-    with grpc.insecure_channel('localhost:50051') as channel:
+    with grpc.insecure_channel('tweet_reader:50051') as channel:
         stub = tweetreader_pb2_grpc.TweetReaderStub(channel)
         response = stub.getTweets(tweetreader_pb2.TweetRequest())
 
@@ -46,7 +46,7 @@ def run():
                 num_positive += 1
 
             try:
-                connection = redis.StrictRedis(port=6379)
+                connection = redis.StrictRedis(host="redis", port=6379)
                 connection.set("Total", str(total_words))
                 connection.set("LeastWords", tweet_least_words)
                 connection.set("Tweets." + item.id, "Username: {} - {}".format(item.username, item.text))

@@ -12,7 +12,7 @@ def show_tweets():
     output = "<table style=\"border:1px solid black;float:left;\" width=\"42%\">"
 
     try:
-        connection = redis.StrictRedis(port=6379, decode_responses=True)
+        connection = redis.StrictRedis(host="redis", port=6379, decode_responses=True)
         for key in connection.scan_iter("Total"):
             value = connection.get(key)
 

@@ -9,7 +9,7 @@ import redditreader_pb2_grpc
 
 
 def run():
-    with grpc.insecure_channel("localhost:50055") as channel:
+    with grpc.insecure_channel("reddit_reader:50055") as channel:
         stub = redditreader_pb2_grpc.RedditReaderStub(channel)
         response = stub.getRedditPosts(redditreader_pb2.RedditRequest())
 
@@ -30,7 +30,7 @@ def run():
                 num_nsfw += 1
 
             try:
-                connection = redis.StrictRedis(port=6379)
+                connection = redis.StrictRedis(host="redis", port=6379)
                 connection.set("RedditPosts", total_posts)
                 connection.set("RedditComments", total_comments)
                 connection.set("RedditPost." + item.id, "Title: {}\nAuthor: {}\nNum Comments: {}\nNSFW: {}\n"

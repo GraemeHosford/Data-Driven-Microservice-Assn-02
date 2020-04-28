@@ -14,7 +14,6 @@ class RedditReader(redditreader_pb2_grpc.RedditReaderServicer):
         next(file)
 
         for line in file:
-            print(line)
             line_details = line.split(",")
 
             # File does not use quotes in rows consistently. Can't find any solution which
