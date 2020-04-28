@@ -29,7 +29,7 @@ message RedditInfo {
   string title = 2;
   string author = 3;
   int32 num_comments = 4;
-  bool nsfw = 5;
+  string nsfw = 5;
 }
 
 message RedditRequest {}

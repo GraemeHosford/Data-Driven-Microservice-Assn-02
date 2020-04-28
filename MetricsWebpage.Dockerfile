@@ -14,4 +14,4 @@ RUN pip install --trusted-host pypi.python.org -r requirements.txt
 EXPOSE 8080:5000
 
 # Run app.py when the container launches
-CMD ["python", "tweet_webpage.py"]
+CMD ["python", "metrics_webpage.py"]

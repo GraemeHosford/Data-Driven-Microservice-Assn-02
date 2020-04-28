@@ -6,6 +6,12 @@ services:
       dockerfile: TweetReader.Dockerfile
     ports:
       - "50051:50051"
+  reddit_reader:
+    build:
+      context: .
+      dockerfile: RedditReader.Dockerfile
+    ports:
+      - "50055:50055"
   tweet_analytics_client:
     build:
       context: .
@@ -13,14 +19,21 @@ services:
     depends_on:
       - "tweet_reader"
     command: ["./wait-for-it.sh", "tweet_reader:50051", "--", "python", "-u", "tweet_analytics_client.py"]
+  reddit_analytics_client:
+    build:
+      context: .
+      dockerfile: RedditAnalyticsClient.Dockerfile
+    depends_on:
+      - "reddit_reader"
+    command: ["./wait_for_it.sh", "reddit_reader:50055", "--", "python", "-u", "reddit_analytics_client.py"]
   redis:
     image: redis:alpine
     ports:
       - "6379:6379"
-  tweet_webpage:
+  metrics_webpage:
     build:
       context: .
-      dockerfile: TweetWebpage.Dockerfile
+      dockerfile: MetricsWebpage.Dockerfile
     ports:
       - "8080:5000"
     depends_on:

@@ -9,14 +9,13 @@ app = Flask(__name__)
 
 @app.route('/')
 def show_tweets():
-    output = "<table style=\"border:1px solid black;margin-left:auto;margin-right:auto;\">"
+    output = "<table style=\"border:1px solid black;float:left;\" width=\"42%\">"
 
     try:
         connection = redis.StrictRedis(port=6379, decode_responses=True)
         for key in connection.scan_iter("Total"):
             value = connection.get(key)
 
-            # Using regex to make number in format b'XYZ' appear as just XYZ
             output += "<tr><td><strong>Number of words globally:</strong>\t" + value + "</td></tr>"
 
         for key in connection.scan_iter("LeastWords"):
@@ -35,15 +34,39 @@ def show_tweets():
             value = connection.get(key)
             output += "<tr><td><strong>Positive sentiment in the last 3 minutes:</strong>\t" + value + "%</td></tr>"
 
-        # Split metrics and tweet list into separate tables
-        output += "</table>"
-        output += "<table style=\"border:1px solid black;margin-left:auto;margin-right:auto;\">"
-
         for key in connection.scan_iter("Tweets.*"):
             value = connection.get(key)
             output += "<tr><td>" + value + "</td></tr>"
 
         output += "</table>"
+
+        output += "<table style=\"border:1px solid red;float:right;\" width=\"40%\">"
+
+        for key in connection.scan_iter("RedditPosts"):
+            value = connection.get(key)
+            output += "<tr><td><strong>Total number of Reddit posts globally: </strong>" + value + "</td></tr>"
+
+        for key in connection.scan_iter("RedditComments"):
+            value = connection.get(key)
+            output += "<tr><td><strong>Total number of comments across all posts globally: </strong>" + \
+                      value + "</td></tr>"
+
+        for key in connection.scan_iter("AverageComment"):
+            value = connection.get(key)
+            output += "<tr><td><strong>Average number of comments per post: </strong>" + \
+                      value + "</td></tr>"
+
+        for key in connection.scan_iter("NSFWPercent"):
+            value = connection.get(key)
+            output += "<tr><td><strong>Percent of posts which are NSFW: </strong>" + \
+                      value + "</td></tr>"
+
+        for key in connection.scan_iter("RedditPost.*"):
+            value = connection.get(key)
+            output += "<tr><td>" + value + "</td></tr>"
+
+        output += "</table>"
+
         return output
     except Exception as e:
         print("Error", e)

@@ -17,32 +17,30 @@ def run():
         total_comments = 0
         num_nsfw = 0
 
-        update_time = None
-
         for item in response:
             print(item.title)
             total_posts += 1
             total_comments += item.num_comments
 
-            if item.nsfw:
+            print(item.nsfw)
+
+            # Checking NSFW this way as using bool(nsfw_string) in reddit_reader.py was always giving
+            # when string was not empty
+            if item.nsfw.lower() == "true":
                 num_nsfw += 1
 
             try:
                 connection = redis.StrictRedis(port=6379)
+                connection.set("RedditPosts", total_posts)
+                connection.set("RedditComments", total_comments)
+                connection.set("RedditPost." + item.id, "Title: {}\nAuthor: {}\nNum Comments: {}\nNSFW: {}\n"
+                               .format(item.title, item.author, item.num_comments, item.nsfw))
 
-                if update_time is None or time.time() >= (update_time + 180):
-                    update_time = time.time()
-                    connection.set("RedditPosts", total_posts)
-                    connection.set("RedditComments", total_comments)
-                    connection.set("AverageComment", total_comments / total_posts)
-                    connection.set("NSFWPercent", (num_nsfw / total_posts) * 100)
+                connection.set("AverageComment", total_comments / total_posts)
+                connection.set("NSFWPercent", (num_nsfw / total_posts) * 100)
 
-                    total_posts = 0
-                    total_comments = 0
-                    num_nsfw = 0
-
-                # Sleep for random time between 0 and 6 seconds for average of update very 3 seconds
-                time.sleep(random.randint(0, 6))
+                # Sleep for random time between 0 and 4 seconds for average of update very 2 seconds
+                time.sleep(random.randint(0, 4))
             except Exception as e:
                 print("Reddit Analytics Error", e)
 

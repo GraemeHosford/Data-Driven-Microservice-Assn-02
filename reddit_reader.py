@@ -22,7 +22,7 @@ class RedditReader(redditreader_pb2_grpc.RedditReaderServicer):
             if len(line_details) == 12:
                 yield redditreader_pb2.RedditInfo(id=line_details[0], title=line_details[1],
                                                   author=line_details[3], num_comments=int(line_details[10]),
-                                                  nsfw=bool(line_details[11]))
+                                                  nsfw=line_details[11])
             else:
                 continue
 
