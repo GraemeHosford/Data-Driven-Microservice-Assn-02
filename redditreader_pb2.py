@@ -118,6 +118,7 @@ RedditRequest = _reflection.GeneratedProtocolMessageType('RedditRequest', (_mess
 })
 _sym_db.RegisterMessage(RedditRequest)
 
+
 DESCRIPTOR._options = None
 
 _REDDITREADER = _descriptor.ServiceDescriptor(

@@ -1,4 +1,2 @@
-Flask
-redis
 grpcio
 googleapis-common-protos

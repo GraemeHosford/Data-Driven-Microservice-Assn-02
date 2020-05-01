@@ -22,11 +22,9 @@ def run():
             total_posts += 1
             total_comments += item.num_comments
 
-            print(item.nsfw)
-
-            # Checking NSFW this way as using bool(nsfw_string) in reddit_reader.py was always giving
-            # when string was not empty
-            if item.nsfw.lower() == "true":
+            # Checking NSFW this way as using bool(nsfw_string) in reddit_reader.py was
+            # always giving true when string was not empty
+            if item.nsfw.lower().replace("\n", "") == "true":
                 num_nsfw += 1
 
             try:

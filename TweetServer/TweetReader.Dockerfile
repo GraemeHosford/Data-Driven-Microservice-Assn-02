@@ -2,7 +2,9 @@ FROM python:3-stretch
 
 WORKDIR /app
 
-COPY . /app
+COPY /TweetServer /app
+COPY /tweetreader_pb2.py /app
+COPY /tweetreader_pb2_grpc.py /app
 
 RUN pip install --trusted-host pypi.python.org -r requirements.txt
 
