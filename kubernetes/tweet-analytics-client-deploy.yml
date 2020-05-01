@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tweet-analytics-client-deploy
+spec:
+  replicas: 10
+  selector:
+    matchLabels:
+      app: tweet-analytics-client
+  minReadySeconds: 10
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 1
+      maxSurge: 1
+  template:
+    metadata:
+      labels:
+        app: tweet-analytics-client
+    spec:
+      containers:
+        - name: tweet-analytics-client
+          image: graemehosford/tweetanalyticsclient:latest

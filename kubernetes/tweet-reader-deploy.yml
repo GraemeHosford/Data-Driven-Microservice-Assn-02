@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tweet-reader-deploy
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: tweet-reader
+  minReadySeconds: 6
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 1
+      maxSurge: 1
+  template:
+    metadata:
+      labels:
+        app: tweet-reader
+    spec:
+      containers:
+        - name: tweet-reader
+          image: graemehosford/tweetserver:latest
+          ports:
+            - containerPort: 50051

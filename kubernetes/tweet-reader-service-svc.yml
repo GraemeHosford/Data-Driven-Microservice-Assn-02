@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: tweet-reader
+  labels:
+    app: tweet-reader
+spec:
+  ports:
+    - port: 50051
+      protocol: TCP
+  selector:
+    app: tweet-reader

@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: reddit-reader-deploy
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: reddit-reader
+  minReadySeconds: 6
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 1
+      maxSurge: 1
+  template:
+    metadata:
+      labels:
+        app: reddit-reader
+    spec:
+      containers:
+        - name: reddit-reader
+          image: graemehosford/redditserver:latest
+          ports:
+            - containerPort: 50055

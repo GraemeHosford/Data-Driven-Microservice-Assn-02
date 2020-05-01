@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: reddit-reader
+  labels:
+    app: reddit-reader
+spec:
+  ports:
+    - port: 50055
+      protocol: TCP
+  selector:
+    app: reddit-reader

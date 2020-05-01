@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: metrics-webpage-deploy
+spec:
+  replicas: 5
+  selector:
+    matchLabels:
+      app: metrics-webpage
+  minReadySeconds: 10
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 1
+      maxSurge: 1
+  template:
+    metadata:
+      labels:
+        app: metrics-webpage
+    spec:
+      containers:
+        - name: metrics-webpage
+          image: graemehosford/metricswebpage:latest
+          ports:
+            - containerPort: 5000
