@@ -9,4 +9,4 @@ COPY /wait-for-it.sh /app
 
 RUN pip install --trusted-host pypi.python.org -r requirements.txt
 
-CMD ["python", "reddit_analytics_client.py"]
+CMD ["python", "reddit-analytics-client.py"]

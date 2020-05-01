@@ -1,36 +1,36 @@
 version: '3'
 services:
-  tweet_reader:
+  tweet-reader:
     build:
       context: .
       dockerfile: TweetServer/TweetReader.Dockerfile
     ports:
       - "50051:50051"
-  reddit_reader:
+  reddit-reader:
     build:
       context: .
       dockerfile: RedditServer/RedditReader.Dockerfile
     ports:
       - "50055:50055"
-  tweet_analytics_client:
+  tweet-analytics-client:
     build:
       context: .
       dockerfile: TweetClient/TweetAnalyticsClient.Dockerfile
     depends_on:
-      - "tweet_reader"
-    command: ["./wait-for-it.sh", "tweet_reader:50051", "--", "python", "-u", "tweet_analytics_client.py"]
-  reddit_analytics_client:
+      - "tweet-reader"
+    command: ["./wait-for-it.sh", "tweet-reader:50051", "--", "python", "-u", "tweet-analytics-client.py"]
+  reddit-analytics-client:
     build:
       context: .
       dockerfile: RedditClient/RedditAnalyticsClient.Dockerfile
     depends_on:
-      - "reddit_reader"
-    command: ["./wait-for-it.sh", "reddit_reader:50055", "--", "python", "-u", "reddit_analytics_client.py"]
+      - "reddit-reader"
+    command: ["./wait-for-it.sh", "reddit-reader:50055", "--", "python", "-u", "reddit-analytics-client.py"]
   redis:
     image: redis:alpine
     ports:
       - "6379:6379"
-  metrics_webpage:
+  metrics-webpage:
     build:
       context: .
       dockerfile: MetricsWebpage/MetricsWebpage.Dockerfile

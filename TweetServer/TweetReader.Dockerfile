@@ -10,4 +10,4 @@ RUN pip install --trusted-host pypi.python.org -r requirements.txt
 
 EXPOSE 50051
 
-CMD ["python", "tweet_reader.py"]
+CMD ["python", "tweet-reader.py"]

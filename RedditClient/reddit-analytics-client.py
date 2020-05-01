@@ -9,7 +9,7 @@ import redditreader_pb2_grpc
 
 
 def run():
-    with grpc.insecure_channel("reddit_reader:50055") as channel:
+    with grpc.insecure_channel("reddit-reader:50055") as channel:
         stub = redditreader_pb2_grpc.RedditReaderStub(channel)
         response = stub.getRedditPosts(redditreader_pb2.RedditRequest())
 
@@ -22,7 +22,7 @@ def run():
             total_posts += 1
             total_comments += item.num_comments
 
-            # Checking NSFW this way as using bool(nsfw_string) in reddit_reader.py was
+            # Checking NSFW this way as using bool(nsfw_string) in reddit-reader.py was
             # always giving true when string was not empty
             if item.nsfw.lower().replace("\n", "") == "true":
                 num_nsfw += 1

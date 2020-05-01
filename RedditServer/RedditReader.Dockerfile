@@ -10,4 +10,4 @@ RUN pip install --trusted-host pypi.python.org -r requirements.txt
 
 EXPOSE 50055
 
-CMD ["python", "reddit_reader.py"]
+CMD ["python", "reddit-reader.py"]
