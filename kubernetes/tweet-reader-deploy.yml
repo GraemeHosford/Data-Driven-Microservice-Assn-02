@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: tweet-reader-deploy
 spec:
-  replicas: 3
+  replicas: 2
   selector:
     matchLabels:
       app: tweet-reader

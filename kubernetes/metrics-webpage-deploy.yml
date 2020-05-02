@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: metrics-webpage-deploy
 spec:
-  replicas: 5
+  replicas: 4
   selector:
     matchLabels:
       app: metrics-webpage
